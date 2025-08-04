@@ -7,6 +7,9 @@ import com.fitness.activityService.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ActivityService {
 
@@ -29,7 +32,7 @@ public class ActivityService {
 
     }
 
-    private static ActivityResponse getActivityResponse(Activity savedActivity) {
+    private ActivityResponse getActivityResponse(Activity savedActivity) {
         ActivityResponse activityResponse =  new ActivityResponse() ;
         activityResponse.setUserId(savedActivity.getUserId());
         activityResponse.setId(String.valueOf(savedActivity.getId()));
@@ -42,4 +45,12 @@ public class ActivityService {
         activityResponse.setAdditionalMetrics(savedActivity.getAdditionalMetrics());
         return activityResponse;
     }
+
+    public List<ActivityResponse> getUserByActivity(Long userId) {
+        List<Activity> activities = activityRepository.findByUserId((userId));
+        return activities.stream()
+                .map(this::getActivityResponse)
+                .collect(Collectors.toList());
+    }
 }
+
