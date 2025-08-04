@@ -52,5 +52,9 @@ public class ActivityService {
                 .map(this::getActivityResponse)
                 .collect(Collectors.toList());
     }
+
+    public ActivityResponse getActivityById(String id) {
+        return activityRepository.findById(id) ;
+    }
 }
 
