@@ -25,9 +25,14 @@ public class ActivityService {
 
         Activity savedActivity = activityRepository.save(activity) ;
 
-        ActivityResponse activityResponse =  new ActivityResponse()
+        return getActivityResponse(savedActivity);
+
+    }
+
+    private static ActivityResponse getActivityResponse(Activity savedActivity) {
+        ActivityResponse activityResponse =  new ActivityResponse() ;
         activityResponse.setUserId(savedActivity.getUserId());
-        activityResponse.setId(savedActivity.getId());
+        activityResponse.setId(String.valueOf(savedActivity.getId()));
         activityResponse.setActivity(savedActivity.getActivity());
         activityResponse.setDuration(savedActivity.getDuration());
         activityResponse.setCaloriesBurned(savedActivity.getCaloriesBurned());
@@ -35,8 +40,6 @@ public class ActivityService {
         activityResponse.setCreatedAt(savedActivity.getCreatedAt());
         activityResponse.setUpdatedAt(savedActivity.getUpdatedAt());
         activityResponse.setAdditionalMetrics(savedActivity.getAdditionalMetrics());
-
         return activityResponse;
-
     }
 }
