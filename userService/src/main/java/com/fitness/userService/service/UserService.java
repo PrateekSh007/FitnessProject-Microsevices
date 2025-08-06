@@ -51,8 +51,9 @@ public class UserService {
         userResponse.setCreatedAt(savedUser.getCreatedAt());
         userResponse.setUpdatedAt(savedUser.getUpdatedAtt());
         return userResponse ;
-
-
-
      }
+
+    public Boolean existByUserId(Long userId) {
+        return userRepository.existsById(userId) ;
+    }
 }
