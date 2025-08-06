@@ -20,9 +20,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserProfile(userId)) ;
     }
 
-    //this will be a data transfer object i.e ReqisterRequest
     @PostMapping("/register")
     public ResponseEntity<UserResponse> createUser(@Valid  @RequestBody RegisterRequest registerRequest){
         return ResponseEntity.ok(userService.register(registerRequest)) ;
     }
+
 }
