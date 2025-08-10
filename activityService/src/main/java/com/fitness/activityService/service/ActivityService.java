@@ -28,14 +28,14 @@ public class ActivityService {
 
     @Value("${rabbitmq.exchange.name}")
     private String exchange;
-    @Value("${rabbitmq.exchange.key}d ")
+    @Value("${rabbitmq.routing.key}")
     private String routingKey;
 
     public ActivityResponse trackActivity(ActivityRequest activityRequest) {
 
-        boolean isValidUser = userValidationService.validateUser(activityRequest.getUserId()) ;
-        if(!isValidUser){
-            throw new RuntimeException("Invalid user:" + activityRequest.getUserId()) ;
+        boolean isValidUser = userValidationService.validateUser(activityRequest.getUserId());
+        if (!isValidUser) {
+            throw new RuntimeException("Invalid user:" + activityRequest.getUserId());
         }
 
         Activity activity = Activity.builder()
@@ -45,16 +45,17 @@ public class ActivityService {
                 .caloriesBurned(activityRequest.getCaloriesBurned())
                 .startTime(activityRequest.getStartTime())
                 .additionalMetrics(activityRequest.getAdditionalMetrics())
-                .build() ;
+                .build();
 
-        Activity savedActivity = activityRepository.save(activity) ;
+        Activity savedActivity = activityRepository.save(activity);
 
         //publish to rabbitmq for aiProcessing
-        try{
-            rabbitTemplate.convertAndSend(exchange,routingKey,savedActivity);
+        try {
+            rabbitTemplate.convertAndSend(exchange, routingKey, savedActivity);
+            System.out.println("I think the code is running ");
         } catch (Exception e) {
 //            throw new RuntimeException(e);
-            log.error("failed to publish activity to RabbitMq:" ,e) ;
+            log.error("failed to publish activity to RabbitMq:", e);
         }
 
 
