@@ -26,9 +26,9 @@ public class ActivityService {
     @Autowired
     private RabbitTemplate rabbitTemplate ;
 
-    @Value("${rabbitmq.exchange.name")
+    @Value("${rabbitmq.exchange.name}")
     private String exchange;
-    @Value("${rabbitmq.exchange.key")
+    @Value("${rabbitmq.exchange.key}d ")
     private String routingKey;
 
     public ActivityResponse trackActivity(ActivityRequest activityRequest) {
