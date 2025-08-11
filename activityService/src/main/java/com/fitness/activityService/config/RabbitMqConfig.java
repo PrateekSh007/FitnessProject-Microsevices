@@ -21,7 +21,7 @@ public class RabbitMqConfig {
 
     @Bean
     public Queue activityQueue(){
-        return new Queue(queueName, true); // fixed comma typo
+        return new Queue(queueName, true);
     }
 
     @Bean
